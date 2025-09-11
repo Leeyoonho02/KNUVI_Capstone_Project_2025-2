@@ -20,14 +20,11 @@ Input   : Multi-view(여러 각도에서 찍은) 이미지, 동영상
 output : 수백 ~ 수천만 개의 3D Gaussian 들의 정보
 
 gaussian 은 다음과 같은 정보들로 이루어져있음
-
-Mean : 3D 공간상의 좌표(공의 중심점)
-
-Covariance : 각 가우시안이 타원체로 퍼지는 정도와 방향(공의 크기와 방향)
-
-Color : 각 가우시안의 RGB 값(공의 색상)
-
-Opacity : 투명도/밀도
+| Mean | 3D 공간상의 좌표(공의 중심점) |
+| --- | --- |
+| Covariance  | 각 가우시안이 타원체로 퍼지는 정도와 방향(공의 크기와 방향) |
+| Color | 각 가우시안의 RGB 값(공의 색상) |
+| Opacity | 투명도/밀도 |
 
 
 
