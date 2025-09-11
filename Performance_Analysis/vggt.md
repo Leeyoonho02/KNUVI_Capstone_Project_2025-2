@@ -5,4 +5,4 @@
 - 성능 저하 원인을 confidence 문제로 판단
 - confidence 조정 방안은 후속 회의에서 논의 예정
 
-![bicycle original](images/bicycle_original.bmp)
+![bicycle original](../images/bicycle_original.bmp)
