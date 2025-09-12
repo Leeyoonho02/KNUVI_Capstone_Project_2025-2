@@ -1,1 +1,0 @@
-# KNUVI_Capstone_Project_2025-2
