@@ -251,12 +251,12 @@
     }
 
     // === 버튼에 기능 추가 ===
-    document.getElementById('transButton1').addEventListener('click', () => setCameraPosition(0, 3, 3)); // 상
-    document.getElementById('transButton2').addEventListener('click', () => setCameraPosition(0, -3, 3)); // 하
-    document.getElementById('transButton3').addEventListener('click', () => setCameraPosition(0, 0, 5)); // 전
-    document.getElementById('transButton4').addEventListener('click', () => setCameraPosition(0, 0, -5)); // 후
-    document.getElementById('transButton5').addEventListener('click', () => setCameraPosition(-5, 0, 3)); // 좌
-    document.getElementById('transButton6').addEventListener('click', () => setCameraPosition(5, 0, 3)); // 우
+    document.getElementById('transButton1').addEventListener('click', () => setCameraPosition(0, 1, 0)); // 상
+    document.getElementById('transButton2').addEventListener('click', () => setCameraPosition(0, -1, 0)); // 하
+    document.getElementById('transButton3').addEventListener('click', () => setCameraPosition(0, 0, 1)); // 전
+    document.getElementById('transButton4').addEventListener('click', () => setCameraPosition(0, 0, -1)); // 후
+    document.getElementById('transButton5').addEventListener('click', () => setCameraPosition(1, 0, 0)); // 좌
+    document.getElementById('transButton6').addEventListener('click', () => setCameraPosition(-1, 0, 0)); // 우
 
     // === QP 세팅 ===
     function setQPOptions() {
@@ -381,8 +381,17 @@
             pointCloud.material.dispose();
           }
 
+          // 새로 로드된 PLY 메쉬를 중앙으로 이동시키기
+          geometry.center(); // 메쉬의 중심을 (0, 0, 0)으로 맞춤
+
           pointCloud = new THREE.Points(geometry, material);
           scene.add(pointCloud);
+
+          // 메쉬 위치를 화면 중앙으로 설정 (0, 0, 0)
+          pointCloud.position.set(0, 0, 0);
+
+          // 좌표계 뒤집기: x-y 평면 기준으로 뒤집기
+          pointCloud.scale.set(1, -1, -1);  // z축을 뒤집음
 
           const numPoints = geometry.getAttribute('position').count;
           statElement.textContent = `포인트: ${numPoints.toLocaleString()}`;
@@ -413,46 +422,59 @@
 
     // === three.js 초기화 ===
     function initThree() {
-      const width = viewer.clientWidth || window.innerWidth;
-      const height = viewer.clientHeight || (window.innerHeight - 140);
+        const width = viewer.clientWidth || window.innerWidth;
+        const height = viewer.clientHeight || (window.innerHeight - 140);
 
-      scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x050509);
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050509);
 
-      camera = new THREE.PerspectiveCamera(60, width / height, 0.01, 1000);
-      camera.position.set(0, 0, 3);
+        camera = new THREE.PerspectiveCamera(60, width / height, 0.01, 1000);
+        camera.position.set(1, 1, 1);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(width, height);
-      viewer.appendChild(renderer.domElement);
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(width, height);
+        viewer.appendChild(renderer.domElement);
 
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.08;
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
 
-      const grid = new THREE.GridHelper(10, 10, 0x444444, 0x222222);
-      grid.position.y = -2;
-      scene.add(grid);
+        // Allow full 360-degree rotation (no restriction on horizontal or vertical angles)
+        controls.maxPolarAngle = Infinity;  // 180 degrees vertical (default)
+        controls.minPolarAngle = -Infinity;       // 0 degrees vertical (default)
 
-      const axes = new THREE.AxesHelper(1.0);
-      scene.add(axes);
+        // Set horizontal rotation limits to allow full 360-degree rotation
+        controls.maxAzimuthAngle = Infinity; // No limit on horizontal rotation
+        controls.minAzimuthAngle = -Infinity; // No limit on horizontal rotation
 
-      window.addEventListener('resize', () => {
-        const w = viewer.clientWidth || window.innerWidth;
-        const h = viewer.clientHeight || (window.innerHeight - 140);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-      });
+        // Set limits for zoom (optional)
+        controls.enableZoom = true;
 
-      function animate() {
-        requestAnimationFrame(animate);
-        if (controls) controls.update();
-        renderer.render(scene, camera);
-      }
-      animate();
+        const grid = new THREE.GridHelper(10, 10, 0x444444, 0x222222);
+        grid.position.y = -2;
+        scene.add(grid);
+
+        const axes = new THREE.AxesHelper(1.0);
+        scene.add(axes);
+
+        window.addEventListener('resize', () => {
+            const w = viewer.clientWidth || window.innerWidth;
+            const h = viewer.clientHeight || (window.innerHeight - 140);
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (controls) controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
     }
+
+
 
     // === 이벤트 & 초기화 ===
     codecSelect.addEventListener('change', () => {
