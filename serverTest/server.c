@@ -67,6 +67,39 @@ void handle_debug_html(int client_fd) {
     close(fd);
 }
 
+// 파일을 클라이언트에 전송하는 함수 (HTML, CSS, JS, 이미지 등 모두 처리)
+void handle_file(int client_fd, const char *filepath, const char *content_type) {
+    int fd = open(filepath, O_RDONLY);
+    if (fd < 0) {
+        char msg[512];
+        snprintf(msg, sizeof(msg),
+                 "%s 파일을 찾을 수 없습니다.\n현재 디렉토리에서 실행했는지 확인하세요.", filepath);
+        send_text_response(client_fd, 500, "Internal Server Error", msg);
+        return;
+    }
+
+    struct stat st;
+    fstat(fd, &st);
+    off_t file_size = st.st_size;
+
+    char header[512];
+    int hlen = snprintf(header, sizeof(header),
+                        "HTTP/1.1 200 OK\r\n"
+                        "Content-Type: %s\r\n"
+                        "Content-Length: %lld\r\n"
+                        "Connection: close\r\n"
+                        "\r\n",
+                        content_type, (long long)file_size);
+    write(client_fd, header, hlen);
+
+    char buf[4096];
+    ssize_t n;
+    while ((n = read(fd, buf, sizeof(buf))) > 0) {
+        write(client_fd, buf, n);
+    }
+    close(fd);
+}
+
 void handle_frames(int client_fd, const char *query) {
     char category[64] = {0};
     char codec[16]    = {0};
@@ -351,7 +384,38 @@ void handle_ply(int client_fd, const char *query) {
     }
     close(fd);
 }
+// HTML 파일을 클라이언트에 전송하는 함수
+void handle_html_file(int client_fd, const char *filename) {
+    int fd = open(filename, O_RDONLY);
+    if (fd < 0) {
+        char msg[512];
+        snprintf(msg, sizeof(msg),
+                 "%s 파일을 찾을 수 없습니다.\n현재 디렉토리에서 실행했는지 확인하세요.", filename);
+        send_text_response(client_fd, 500, "Internal Server Error", msg);
+        return;
+    }
 
+    struct stat st;
+    fstat(fd, &st);
+    off_t file_size = st.st_size;
+
+    char header[512];
+    int hlen = snprintf(header, sizeof(header),
+                        "HTTP/1.1 200 OK\r\n"
+                        "Content-Type: text/html; charset=utf-8\r\n"
+                        "Content-Length: %lld\r\n"
+                        "Connection: close\r\n"
+                        "\r\n",
+                        (long long)file_size);
+    write(client_fd, header, hlen);
+
+    char buf[4096];
+    ssize_t n;
+    while ((n = read(fd, buf, sizeof(buf))) > 0) {
+        write(client_fd, buf, n);
+    }
+    close(fd);
+}
 // ------------------- 클라이언트 한 명 처리 -------------------
 void handle_client(int client_fd) {
     char req[REQ_BUF_SIZE];
@@ -396,8 +460,20 @@ void handle_client(int client_fd) {
     }
 
     // 라우팅
-    if (strcmp(path, "/") == 0 || strcmp(path, "/viewer.html") == 0 || strcmp(path, "/viewer") == 0) {
+    if (strcmp(path, "/") == 0 || strcmp(path, "/index.html") == 0) {
+        handle_html_file(client_fd, "index.html");
+    } else if (strcmp(path, "/methodology.html") == 0) {
+        handle_html_file(client_fd, "methodology.html");
+    } else if (strcmp(path, "/results.html") == 0) {
+        handle_html_file(client_fd, "results.html");
+    } else if (strcmp(path, "/team.html") == 0) {
+        handle_html_file(client_fd, "team.html");
+    } else if (strcmp(path, "/viewer.html") == 0 || strcmp(path, "/viewer") == 0) {
         handle_viewer_html(client_fd);
+    } else if (strcmp(path, "/css/style.css") == 0) {
+        handle_file(client_fd, "css/style.css", "text/css");
+    } else if (strcmp(path, "/js/script.js") == 0) {
+        handle_file(client_fd, "js/script.js", "application/javascript");
     } else if (strcmp(path, "/ply") == 0) {
         handle_ply(client_fd, query);
     } else if (strcmp(path, "/frames") == 0) {
@@ -456,7 +532,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    printf("서버 시작: http://localhost:%d/viewer.html\n", PORT);
+    printf("서버 시작: http://localhost:%d/index.html\n", PORT);
 
     // 무한 루프: 클라이언트 요청 대기
     while (1) {

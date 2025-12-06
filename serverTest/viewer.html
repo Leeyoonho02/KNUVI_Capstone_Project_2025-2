@@ -63,12 +63,12 @@
 
     #overlayMessage {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      top: 60px;
+      left: 30px;
+      transform: translate(0, 0);
       color: #aaa;
       font-size: 14px;
-      text-align: center;
+      text-align: left;
       pointer-events: none;
     }
 
@@ -132,8 +132,6 @@
   <!-- 뷰어 영역 -->
   <div id="viewer">
     <div id="overlayMessage">
-      초기값: category=<b>backpack</b>, codec=<b>JPEG</b>, QP=<b>10</b><br/>
-      기준으로 frame 리스트를 자동으로 불러옵니다.<br/><br/>
       값 조정 후 <b>로드 + 보기</b> 버튼을 누르면<br/>
       서버에서 PLY를 받아와서 시각화합니다.
     </div>
@@ -215,9 +213,9 @@
 
     <span id="urlText"></span>
   </header>
-
-  <div id="log">[log] 초기화 중...</div>
-
+  
+  <!--<div id="log">[log] 초기화 중...</div> -->
+  
   <script>
     // === DOM 요소 ===
     const categorySelect = document.getElementById('categorySelect');

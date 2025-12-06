@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - KNUVI Capstone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-accent);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* 버튼 스타일 */
+        .btn-link {
+            display: inline-block;
+            padding: 0.8rem 1.6rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-link:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">KNUVI <span class="text-accent">Capstone</span></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="methodology.html">Methodology</a>
+                <a href="results.html" class="active">Results</a>
+                <a href="team.html">Team</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 100px;">
+        <header class="section-header">
+            <h1>Analysis Results</h1>
+            <p class="text-secondary">Quantitative and Qualitative comparison of 3DGS and VGGT under compression.</p>
+        </header>
+
+        <section class="section">
+            <div class="section-header"
+                style="border-bottom: 2px solid var(--text-accent); padding-bottom: 1rem; margin-bottom: 2rem;">
+                <h2 style="color: var(--text-accent);">I. 3D Gaussian Splatting Analysis</h2>
+                <p class="text-secondary">Evaluating reconstruction quality under varying compression levels (CRF/QP).
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Quantitative Results (PSNR / SSIM / LPIPS)</h3>
+                <div style="overflow-x: auto; margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Compression</th>
+                                <th>PSNR (↑)</th>
+                                <th>SSIM (↑)</th>
+                                <th>LPIPS (↓)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Placeholder: Populate with 3DGS results -->
+                            <tr>
+                                <td>Truck</td>
+                                <td>Original</td>
+                                <td>32.45</td>
+                                <td>0.94</td>
+                                <td>0.08</td>
+                            </tr>
+                            <tr>
+                                <td>Truck</td>
+                                <td>QP 30</td>
+                                <td>28.12</td>
+                                <td>0.88</td>
+                                <td>0.15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3>Visual Comparison</h3>
+                <div class="grid-2" style="margin-top: 1rem;">
+                    <div>
+                        <div
+                            style="background: #222; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #555;">
+                            [3DGS: Original]
+                        </div>
+                        <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">Original</p>
+                    </div>
+                    <div>
+                        <div
+                            style="background: #222; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #555;">
+                            [3DGS: High Compression]
+                        </div>
+                        <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">High
+                            Compression</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="margin-top: 4rem;">
+            <div class="section-header"
+                style="border-bottom: 2px solid var(--accent-secondary); padding-bottom: 1rem; margin-bottom: 2rem;">
+                <h2 style="color: var(--accent-secondary);">II. VGGT Analysis</h2>
+                <p class="text-secondary">Geometric robustness analysis using Chamfer Distance and AUC.</p>
+            </div>
+
+            <div class="card">
+                <h3>Geometric Accuracy (Chamfer Distance / AUC)</h3>
+                <div style="overflow-x: auto; margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Method</th>
+                                <th>Chamfer Dist (↓)</th>
+                                <th>AUC (↑)</th>
+                                <th>Point Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Placeholder: Populate with VGGT results -->
+                            <tr>
+                                <td>Scene 1</td>
+                                <td>VGGT (Base)</td>
+                                <td>0.015</td>
+                                <td>0.85</td>
+                                <td>15,420</td>
+                            </tr>
+                            <tr>
+                                <td>Scene 1</td>
+                                <td>VGGT (Compressed)</td>
+                                <td>0.034</td>
+                                <td>0.72</td>
+                                <td>12,100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3>Visual Comparison</h3>
+                <div class="grid-2" style="margin-top: 1rem;">
+                    <div>
+                        <div
+                            style="background: #222; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #555;">
+                            [VGGT: Original]
+                        </div>
+                        <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">Original</p>
+                    </div>
+                    <div>
+                        <div
+                            style="background: #222; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #555;">
+                            [VGGT: High Compression]
+                        </div>
+                        <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">High
+                            Compression</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 추가된 버튼: VGGT Viewer로 이동 -->
+            <a href="viewer.html" class="btn-link">Go to VGGT Viewer</a>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 KNUVI Capstone Team 3</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
