@@ -146,6 +146,10 @@
     <button id="transButton4">후</button>
     <button id="transButton5">좌</button>
     <button id="transButton6">우</button>
+    
+    <!-- 확대/축소 버튼 추가 -->
+    <button id="zoomInButton">확대</button>
+    <button id="zoomOutButton">축소</button>
   </div>
 
   <!-- 헤더 영역 -->
@@ -257,6 +261,44 @@
     document.getElementById('transButton4').addEventListener('click', () => setCameraPosition(0, 0, -1)); // 후
     document.getElementById('transButton5').addEventListener('click', () => setCameraPosition(1, 0, 0)); // 좌
     document.getElementById('transButton6').addEventListener('click', () => setCameraPosition(-1, 0, 0)); // 우
+
+    // 확대/축소 기능
+    const zoomInButton = document.getElementById('zoomInButton');
+    const zoomOutButton = document.getElementById('zoomOutButton');
+
+    zoomInButton.addEventListener('click', () => { //확대버튼
+      //camera.position.z -= 0.1;  // 확대
+      if(camera.position.x != 0) {
+        if(camera.position.x > 0) camera.position.x *= 0.95
+        else camera.position.x *= 0.95
+      }
+      if(camera.position.y != 0) {
+        if(camera.position.y > 0) camera.position.y *= 0.95
+        else camera.position.y *= 0.95
+      }
+      if(camera.position.z != 0) {
+        if(camera.position.z > 0) camera.position.z *= 0.95
+        else camera.position.z *= 0.95
+      }
+      controls.update();
+    });
+
+    zoomOutButton.addEventListener('click', () => { //축소버튼
+      //camera.position.z += 0.1;  // 축소
+      if(camera.position.x != 0) {
+        if(camera.position.x < 0) camera.position.x *= 1.05
+        else camera.position.x *= 1.05
+      }
+      if(camera.position.y != 0) {
+        if(camera.position.y < 0) camera.position.y *= 1.05
+        else camera.position.y *= 1.05
+      }
+      if(camera.position.z != 0) {
+        if(camera.position.z < 0) camera.position.z *= 1.05
+        else camera.position.z *= 1.05
+      }
+      controls.update();
+    });
 
     // === QP 세팅 ===
     function setQPOptions() {
@@ -473,8 +515,6 @@
         }
         animate();
     }
-
-
 
     // === 이벤트 & 초기화 ===
     codecSelect.addEventListener('change', () => {
