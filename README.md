@@ -2,6 +2,18 @@
 # KNUVI Capstone Project 2025-2
 **경북대학교 (KNU) - 2025년도 2학기 종합설계프로젝트 1**
 
+
+<div>
+   <h3>
+      <a href="https://leeyoonho02.github.io/KNUVI_Capstone_Project_2025-2/" target="_blank">
+         🌐 Project Demo Page
+      </a>
+   </h3>
+</div>
+
+<br>
+
+
 ## 📋 프로젝트 개요
 
 본 프로젝트는 **3D Gaussian Splatting (3DGS)** 및 **Visual Geometry Grounded Transformer (VGGT)** 기술을 활용한 3D 재구성 및 성능 분석 연구입니다. Structure-from-Motion (SfM) 파이프라인과 최신 딥러닝 기반 3D 재구성 기술을 비교·분석하고, 성능 개선 방법론을 제시합니다.
