@@ -255,9 +255,15 @@
                     <label
                         style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem; font-weight: bold;">Generated
                         Command</label>
-                    <div class="code-block" id="generatedCommand"
-                        style="font-size: 1rem; padding: 1.5rem; min-height: 60px;">
-                        Loading...
+                    <div style="position: relative;">
+                        <div class="code-block" id="generatedCommand"
+                            style="font-size: 1rem; padding: 1.5rem; min-height: 60px; padding-right: 80px;">
+                            Loading...
+                        </div>
+                        <button id="copyBtn"
+                            style="position: absolute; top: 10px; right: 10px; background: #333; color: #fff; border: 1px solid #555; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: background 0.2s;">
+                            Copy
+                        </button>
                     </div>
                 </div>
 
@@ -281,6 +287,7 @@
             const genWidth = document.getElementById('genWidth');
             const genHeight = document.getElementById('genHeight');
             const generatedCommand = document.getElementById('generatedCommand');
+            const copyBtn = document.getElementById('copyBtn');
 
             function updateUI() {
                 const codec = genCodec.value;
@@ -344,6 +351,22 @@
 
                 generatedCommand.textContent = cmd;
             }
+
+            // Copy Function
+            copyBtn.addEventListener('click', () => {
+                const textToCopy = generatedCommand.textContent.trim();
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = 'Copied!';
+                    copyBtn.style.background = '#4CAF50';
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.style.background = '#333';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
 
             // Events
             genCodec.addEventListener('change', updateUI);
