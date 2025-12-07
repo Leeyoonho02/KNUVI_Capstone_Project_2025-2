@@ -39,23 +39,6 @@
         tbody tr:hover {
             background: rgba(255, 255, 255, 0.02);
         }
-
-        /* 버튼 스타일 */
-        .btn-link {
-            display: inline-block;
-            padding: 0.8rem 1.6rem;
-            font-size: 1rem;
-            color: white;
-            background-color: #4CAF50;
-            border-radius: 5px;
-            text-decoration: none;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .btn-link:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 
@@ -64,9 +47,9 @@
         <div class="container nav-content">
             <a href="index.html" class="logo">KNUVI <span class="text-accent">Capstone</span></a>
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="methodology.html">Methodology</a>
+                <a href="index.html">Introduction</a>
                 <a href="results.html" class="active">Results</a>
+                <a href="compression.html">Compression</a>
                 <a href="team.html">Team</a>
             </div>
         </div>
@@ -82,38 +65,209 @@
             <div class="section-header"
                 style="border-bottom: 2px solid var(--text-accent); padding-bottom: 1rem; margin-bottom: 2rem;">
                 <h2 style="color: var(--text-accent);">I. 3D Gaussian Splatting Analysis</h2>
-                <p class="text-secondary">Evaluating reconstruction quality under varying compression levels (CRF/QP).
-                </p>
+                <p class="text-secondary" style="margin-bottom: 0.5rem;">Evaluating reconstruction quality under varying
+                    compression levels (CRF/QP).</p>
+                <p class="text-secondary"><strong>Dataset</strong>: MipNeRF360 (8x downscaled)</p>
             </div>
 
             <div class="card">
-                <h3>Quantitative Results (PSNR / SSIM / LPIPS)</h3>
+                <h3>Quantitative Results: HEVC Compression</h3>
                 <div style="overflow-x: auto; margin-top: 1rem;">
                     <table>
                         <thead>
                             <tr>
-                                <th>Dataset</th>
-                                <th>Compression</th>
-                                <th>PSNR (↑)</th>
-                                <th>SSIM (↑)</th>
-                                <th>LPIPS (↓)</th>
+                                <th>QP</th>
+                                <th>PSNR</th>
+                                <th>SSIM</th>
+                                <th>LPIPS</th>
+                                <th>ΔPSNR (↓)</th>
+                                <th>ΔSSIM (↓)</th>
+                                <th>ΔLPIPS (↑)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Placeholder: Populate with 3DGS results -->
                             <tr>
-                                <td>Truck</td>
-                                <td>Original</td>
-                                <td>32.45</td>
-                                <td>0.94</td>
-                                <td>0.08</td>
+                                <td>HEVC 27</td>
+                                <td>30.781</td>
+                                <td>0.871</td>
+                                <td>0.099</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
                             </tr>
                             <tr>
-                                <td>Truck</td>
-                                <td>QP 30</td>
-                                <td>28.12</td>
-                                <td>0.88</td>
-                                <td>0.15</td>
+                                <td>HEVC 32</td>
+                                <td>28.335</td>
+                                <td>0.777</td>
+                                <td>0.211</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>HEVC 37</td>
+                                <td>25.731</td>
+                                <td>0.672</td>
+                                <td>0.345</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>HEVC 42</td>
+                                <td>24.022</td>
+                                <td>0.580</td>
+                                <td>0.455</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #444;">
+                                <td>Rendered HEVC 27</td>
+                                <td>25.527</td>
+                                <td>0.752</td>
+                                <td>0.195</td>
+                                <td>5.253</td>
+                                <td>0.119</td>
+                                <td>0.096</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered HEVC 32</td>
+                                <td>23.782</td>
+                                <td>0.652</td>
+                                <td>0.326</td>
+                                <td>4.553</td>
+                                <td>0.125</td>
+                                <td>0.115</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered HEVC 37</td>
+                                <td>21.542</td>
+                                <td>0.543</td>
+                                <td>0.435</td>
+                                <td>4.189</td>
+                                <td>0.129</td>
+                                <td>0.091</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered HEVC 42</td>
+                                <td>20.420</td>
+                                <td>0.481</td>
+                                <td>0.557</td>
+                                <td>3.603</td>
+                                <td>0.098</td>
+                                <td>0.102</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3>Quantitative Results: JPEG Compression</h3>
+                <div style="overflow-x: auto; margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Outputs</th>
+                                <th>PSNR</th>
+                                <th>SSIM</th>
+                                <th>LPIPS</th>
+                                <th>ΔPSNR (↓)</th>
+                                <th>ΔSSIM (↓)</th>
+                                <th>ΔLPIPS (↑)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JPEG 90</td>
+                                <td>35.835</td>
+                                <td>0.960</td>
+                                <td>0.012</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 70</td>
+                                <td>31.287</td>
+                                <td>0.906</td>
+                                <td>0.046</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 50</td>
+                                <td>29.679</td>
+                                <td>0.871</td>
+                                <td>0.084</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 30</td>
+                                <td>28.070</td>
+                                <td>0.825</td>
+                                <td>0.149</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 10</td>
+                                <td>24.462</td>
+                                <td>0.673</td>
+                                <td>0.345</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #444;">
+                                <td>Rendered JPEG 90</td>
+                                <td>27.027</td>
+                                <td>0.846</td>
+                                <td>0.097</td>
+                                <td>8.807</td>
+                                <td>0.114</td>
+                                <td>0.086</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 70</td>
+                                <td>26.454</td>
+                                <td>0.821</td>
+                                <td>0.134</td>
+                                <td>4.833</td>
+                                <td>0.084</td>
+                                <td>0.088</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 50</td>
+                                <td>25.624</td>
+                                <td>0.787</td>
+                                <td>0.173</td>
+                                <td>4.055</td>
+                                <td>0.083</td>
+                                <td>0.089</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 30</td>
+                                <td>25.366</td>
+                                <td>0.767</td>
+                                <td>0.218</td>
+                                <td>2.704</td>
+                                <td>0.058</td>
+                                <td>0.069</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 10</td>
+                                <td>22.611</td>
+                                <td>0.617</td>
+                                <td>0.367</td>
+                                <td>1.852</td>
+                                <td>0.057</td>
+                                <td>0.022</td>
                             </tr>
                         </tbody>
                     </table>
@@ -172,40 +326,131 @@
             <div class="section-header"
                 style="border-bottom: 2px solid var(--accent-secondary); padding-bottom: 1rem; margin-bottom: 2rem;">
                 <h2 style="color: var(--accent-secondary);">II. VGGT Analysis</h2>
-                <p class="text-secondary">Geometric robustness analysis using Chamfer Distance and AUC.</p>
+                <p class="text-secondary" style="margin-bottom: 0.5rem;">Geometric Estimation robustness analysis using
+                    Chamfer Distance and AUC.</p>
+                <p class="text-secondary"><strong>Dataset</strong>: CO3Dv2</p>
             </div>
 
             <div class="card">
-                <h3>Geometric Accuracy (Chamfer Distance / AUC)</h3>
+                <h3>Geometric Accuracy (Chamfer Distance / Camera Pose Estimation(AUC))</h3>
                 <div style="overflow-x: auto; margin-top: 1rem;">
-                    <table>
+                    <table style="width:100%; text-align: center;">
                         <thead>
                             <tr>
-                                <th>Dataset</th>
-                                <th>Method</th>
-                                <th>Chamfer Dist (↓)</th>
-                                <th>AUC (↑)</th>
-                                <th>Point Count</th>
+                                <th style="text-align: center;">Compression</th>
+                                <th style="text-align: center;">Chamfer Dist. (↓)</th>
+                                <th style="text-align: center;">AUC (↑) @30</th>
+                                <th style="text-align: center;">AUC (↑) @15</th>
+                                <th style="text-align: center;">AUC (↑) @5</th>
+                                <th style="text-align: center;">AUC (↑) @3</th>
+                                <th style="text-align: center;">Point Count</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Placeholder: Populate with VGGT results -->
-                            <tr>
-                                <td>Scene 1</td>
-                                <td>VGGT (Base)</td>
-                                <td>0.015</td>
-                                <td>0.85</td>
-                                <td>15,420</td>
+                            <tr style="border-bottom: 2px solid white;">
+                                <td style="text-align: center;">Original</td>
+                                <td style="text-align: center;">3.4717</td>
+                                <td style="text-align: center;">0.9745</td>
+                                <td style="text-align: center;">0.9489</td>
+                                <td style="text-align: center;">0.8545</td>
+                                <td style="text-align: center;">0.7704</td>
+                                <td style="text-align: center;">26,614.91</td>
                             </tr>
                             <tr>
-                                <td>Scene 1</td>
-                                <td>VGGT (Compressed)</td>
-                                <td>0.034</td>
-                                <td>0.72</td>
-                                <td>12,100</td>
+                                <td style="text-align: center;">AVC 27</td>
+                                <td style="text-align: center;">3.4721</td>
+                                <td style="text-align: center;">0.9604</td>
+                                <td style="text-align: center;">0.9207</td>
+                                <td style="text-align: center;">0.7800</td>
+                                <td style="text-align: center;">0.6778</td>
+                                <td style="text-align: center;">25,234.78</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">AVC 32</td>
+                                <td style="text-align: center;">3.4923</td>
+                                <td style="text-align: center;">0.9576</td>
+                                <td style="text-align: center;">0.9152</td>
+                                <td style="text-align: center;">0.7611</td>
+                                <td style="text-align: center;">0.6509</td>
+                                <td style="text-align: center;">22,855.32</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">AVC 37</td>
+                                <td style="text-align: center;">3.5279</td>
+                                <td style="text-align: center;">0.9509</td>
+                                <td style="text-align: center;">0.9019</td>
+                                <td style="text-align: center;">0.7289</td>
+                                <td style="text-align: center;">0.6056</td>
+                                <td style="text-align: center;">20,012.51</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">AVC 42</td>
+                                <td style="text-align: center;">3.5615</td>
+                                <td style="text-align: center;">0.9405</td>
+                                <td style="text-align: center;">0.8809</td>
+                                <td style="text-align: center;">0.6800</td>
+                                <td style="text-align: center;">0.5528</td>
+                                <td style="text-align: center;">16,038.15</td>
+                            </tr>
+                            <tr style="border-bottom: 2px solid white;">
+                                <td style="text-align: center;">AVC 47</td>
+                                <td style="text-align: center;">3.5884</td>
+                                <td style="text-align: center;">0.9210</td>
+                                <td style="text-align: center;">0.8443</td>
+                                <td style="text-align: center;">0.6117</td>
+                                <td style="text-align: center;">0.4676</td>
+                                <td style="text-align: center;">15,355.68</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">JPEG 70</td>
+                                <td style="text-align: center;">3.4801</td>
+                                <td style="text-align: center;">0.9749</td>
+                                <td style="text-align: center;">0.9498</td>
+                                <td style="text-align: center;">0.8567</td>
+                                <td style="text-align: center;">0.7741</td>
+                                <td style="text-align: center;">26,173.84</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">JPEG 50</td>
+                                <td style="text-align: center;">3.5059</td>
+                                <td style="text-align: center;">0.9756</td>
+                                <td style="text-align: center;">0.9513</td>
+                                <td style="text-align: center;">0.8589</td>
+                                <td style="text-align: center;">0.7741</td>
+                                <td style="text-align: center;">24,491.97</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">JPEG 30</td>
+                                <td style="text-align: center;">3.5075</td>
+                                <td style="text-align: center;">0.9732</td>
+                                <td style="text-align: center;">0.9467</td>
+                                <td style="text-align: center;">0.8461</td>
+                                <td style="text-align: center;">0.7593</td>
+                                <td style="text-align: center;">22,597.27</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">JPEG 20</td>
+                                <td style="text-align: center;">3.5226</td>
+                                <td style="text-align: center;">0.9716</td>
+                                <td style="text-align: center;">0.9433</td>
+                                <td style="text-align: center;">0.8361</td>
+                                <td style="text-align: center;">0.7435</td>
+                                <td style="text-align: center;">20,148.48</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">JPEG 10</td>
+                                <td style="text-align: center;">3.5400</td>
+                                <td style="text-align: center;">0.9679</td>
+                                <td style="text-align: center;">0.9357</td>
+                                <td style="text-align: center;">0.8156</td>
+                                <td style="text-align: center;">0.7120</td>
+                                <td style="text-align: center;">16,450.08</td>
                             </tr>
                         </tbody>
                     </table>
+
+
+
                 </div>
             </div>
 
@@ -229,9 +474,32 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <section class="section" style="margin-top: 4rem; text-align: center;">
+            <div class="card" style="display: inline-block; width: 100%; max-width: 600px; padding: 3rem;">
+                <i data-lucide="box" class="text-accent" size="48" style="margin-bottom: 1.5rem;"></i>
+                <h2>Interactive 3D Viewer</h2>
+                <p class="text-secondary" style="margin-bottom: 2rem;">
+                    Explore the 3D reconstruction results interactively. <br>
+                    Compare Original, JPEG, and AVC artifacts in real-time.
+                </p>
 
-            <!-- 추가된 버튼: VGGT Viewer로 이동 -->
-            <a href="viewer.html" class="btn-link">Go to VGGT Viewer</a>
+                <a href="viewer.html" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                    Open 3D Viewer
+                </a>
+
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                    <p class="text-secondary text-sm" style="margin-bottom: 1rem;">
+                        To use the viewer, you need the PLY dataset on your local machine.
+                    </p>
+                    <a href="https://drive.google.com/file/d/1QtdAbj_vO9G5VM8RE3H2z5SxbrlDmaeD/view?usp=share_link"
+                        target="_blank"
+                        style="color: var(--text-accent); text-decoration: underline; font-size: 0.9rem;">
+                        <i data-lucide="download" size="16" style="vertical-align: middle; margin-right: 4px;"></i>
+                        Download .ply files from Google Drive
+                    </a>
+                </div>
+            </div>
         </section>
     </div>
 
