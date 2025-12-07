@@ -151,47 +151,197 @@
         </section>
 
         <section class="section">
-            <h2>Examples</h2>
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <h2>Command Generator</h2>
+            <div class="card">
+                <p class="text-secondary" style="margin-bottom: 2rem;">
+                    Select your desired options to generate the appropriate command.
+                </p>
 
-                <div class="card">
-                    <h4><i data-lucide="video" style="vertical-align: middle; margin-right: 8px;"></i>HEVC Encoding
-                        (Random Access)</h4>
-                    <p class="text-secondary text-sm" style="margin-bottom: 0.5rem;">Standard video compression with GOP
-                        structure.</p>
-                    <div class="code-block">
-                        python3 main.py --codec HEVC --QP 27 --input video.mp4 --output ./out --preset fast
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+
+                    <!-- Codec -->
+                    <div>
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">Codec</label>
+                        <select id="genCodec"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
+                            <option value="HEVC">HEVC (H.265)</option>
+                            <option value="AVC">AVC (H.264)</option>
+                            <option value="JPEG">JPEG</option>
+                        </select>
+                    </div>
+
+                    <!-- QP / Quality -->
+                    <div>
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">QP
+                            / Quality</label>
+                        <input type="number" id="genQP" value="27"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
+                    </div>
+
+                    <!-- Preset (Video Only) -->
+                    <div id="genPresetContainer">
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">Preset</label>
+                        <select id="genPreset"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
+                            <option value="ultrafast">ultrafast</option>
+                            <option value="superfast">superfast</option>
+                            <option value="veryfast">veryfast</option>
+                            <option value="faster">faster</option>
+                            <option value="fast" selected>fast</option>
+                            <option value="medium">medium</option>
+                            <option value="slow">slow</option>
+                            <option value="slower">slower</option>
+                            <option value="veryslow">veryslow</option>
+                        </select>
+                    </div>
+
+                    <!-- All-Intra (HEVC Only) -->
+                    <div id="genAllIntraContainer" style="display: flex; align-items: center; margin-top: 2rem;">
+                        <input type="checkbox" id="genAllIntra" style="width: 20px; height: 20px; margin-right: 10px;">
+                        <label for="genAllIntra" style="color: #eee;">All-Intra Mode</label>
+                    </div>
+
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <!-- Input Path -->
+                    <div>
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">Input
+                            Path</label>
+                        <input type="text" id="genInput" value="video.mp4"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
+                    </div>
+
+                    <!-- Output Path -->
+                    <div>
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">Output
+                            Path</label>
+                        <input type="text" id="genOutput" value="./output"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
+                    </div>
+                </div>
+                <div id="genYUVSettings"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; display: none;">
+                    <div>
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">Width</label>
+                        <input type="number" id="genWidth" value="1920"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
+                    </div>
+                    <div>
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem;">Height</label>
+                        <input type="number" id="genHeight" value="1080"
+                            style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
                     </div>
                 </div>
 
-                <div class="card">
-                    <h4><i data-lucide="video" style="vertical-align: middle; margin-right: 8px;"></i>HEVC Encoding
-                        (All-Intra)</h4>
-                    <p class="text-secondary text-sm" style="margin-bottom: 0.5rem;">Every frame encoded as a keyframe.
-                    </p>
-                    <div class="code-block">
-                        python3 main.py --codec HEVC --QP 27 --input video.mp4 --output ./out_ai --all_intra
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h4><i data-lucide="video" style="vertical-align: middle; margin-right: 8px;"></i>AVC (H.264)
-                        Encoding</h4>
-                    <div class="code-block">
-                        python3 main.py --codec AVC --QP 30 --input video.mp4 --output ./out_avc --preset ultrafast
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h4><i data-lucide="image" style="vertical-align: middle; margin-right: 8px;"></i>JPEG Compression
-                    </h4>
-                    <div class="code-block">
-                        python3 main.py --codec JPEG --QP 90 --input image.png --output ./out_jpeg
+                <!-- Result -->
+                <div>
+                    <label
+                        style="display: block; margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.9rem; font-weight: bold;">Generated
+                        Command</label>
+                    <div class="code-block" id="generatedCommand"
+                        style="font-size: 1rem; padding: 1.5rem; min-height: 60px;">
+                        Loading...
                     </div>
                 </div>
 
             </div>
         </section>
+
+        <script>
+            const genCodec = document.getElementById('genCodec');
+            const genQP = document.getElementById('genQP');
+            const genPreset = document.getElementById('genPreset');
+            const genPresetContainer = document.getElementById('genPresetContainer');
+            const genAllIntra = document.getElementById('genAllIntra');
+            const genAllIntraContainer = document.getElementById('genAllIntraContainer');
+            const genInput = document.getElementById('genInput');
+            const genOutput = document.getElementById('genOutput');
+            const genYUVSettings = document.getElementById('genYUVSettings');
+            const genWidth = document.getElementById('genWidth');
+            const genHeight = document.getElementById('genHeight');
+            const generatedCommand = document.getElementById('generatedCommand');
+
+            function updateUI() {
+                const codec = genCodec.value;
+
+                // Toggle Preset (Only for HEVC/AVC)
+                if (codec === 'JPEG') {
+                    genPresetContainer.style.display = 'none';
+                    genAllIntraContainer.style.display = 'none';
+                    if (genInput.value === 'video.mp4') genInput.value = 'image.png';
+                } else {
+                    genPresetContainer.style.display = 'block';
+                    if (genInput.value === 'image.png') genInput.value = 'video.mp4';
+
+                    // Toggle All-Intra (Only for HEVC)
+                    if (codec === 'HEVC') {
+                        genAllIntraContainer.style.display = 'flex';
+                    } else {
+                        genAllIntraContainer.style.display = 'none';
+                        genAllIntra.checked = false;
+                    }
+                }
+
+                updateCommand();
+            }
+
+            function updateCommand() {
+                const codec = genCodec.value;
+                const qp = genQP.value;
+                const input = genInput.value || "input_file";
+                const output = genOutput.value || "./output";
+                const preset = genPreset.value;
+                const isAllIntra = genAllIntra.checked;
+
+                // Check for YUV
+                const isYUV = input.toLowerCase().endsWith('.yuv');
+                if (isYUV) {
+                    genYUVSettings.style.display = 'grid';
+                } else {
+                    genYUVSettings.style.display = 'none';
+                }
+
+                let cmd = `python3 main.py --codec ${codec} --QP ${qp} --input ${input} --output ${output}`;
+
+                if (codec !== 'JPEG') {
+                    cmd += ` --preset ${preset}`;
+                }
+
+                if (codec === 'HEVC' && isAllIntra) {
+                    cmd += ` --all_intra`;
+                }
+
+                if (isYUV) {
+                    const w = genWidth.value;
+                    const h = genHeight.value;
+                    cmd += ` --width ${w} --height ${h}`;
+                }
+
+                generatedCommand.textContent = cmd;
+            }
+
+            // Events
+            genCodec.addEventListener('change', updateUI);
+            genQP.addEventListener('input', updateCommand);
+            genPreset.addEventListener('change', updateCommand);
+            genAllIntra.addEventListener('change', updateCommand);
+            genInput.addEventListener('input', updateCommand);
+            genOutput.addEventListener('input', updateCommand);
+            genWidth.addEventListener('input', updateCommand);
+            genHeight.addEventListener('input', updateCommand);
+
+            // Initialize
+            updateUI();
+        </script>
 
         <section class="section">
             <h2>System Requirements</h2>
