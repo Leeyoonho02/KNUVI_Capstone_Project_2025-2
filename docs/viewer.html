@@ -120,9 +120,9 @@
         }
 
         #pointSizeControl {
-            margin-left: auto;
+            margin-left: 40px;
             display: flex;
-            gap: 10px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -214,9 +214,9 @@
         <!-- 포인트 크기 조정 -->
         <div id="pointSizeControl">
             <label>
-                Size:
+                Point Size:
                 <button id="pointSizeIncrease">+</button>
-                <span id="pointSizeValue">0.005</span>
+                <span id="pointSizeValue">0.003</span>
                 <button id="pointSizeDecrease">-</button>
             </label>
         </div>
@@ -239,7 +239,7 @@
 
         // === 카메라 관련 변수 ===
         let scene, camera, renderer, controls, pointCloud = null;
-        let pointSize = 0.005;
+        let pointSize = 0.003;
 
         // === 카메라 이동 ===
         function setCameraPosition(x, y, z) {
