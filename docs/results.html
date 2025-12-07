@@ -136,34 +136,134 @@
             <div class="card">
                 <h3>Geometric Accuracy (Chamfer Distance / AUC)</h3>
                 <div style="overflow-x: auto; margin-top: 1rem;">
-                    <table>
+                    <table style="width:100%; text-align: center;">
                         <thead>
                             <tr>
-                                <th>Dataset</th>
-                                <th>Method</th>
-                                <th>Chamfer Dist (↓)</th>
-                                <th>AUC (↑)</th>
-                                <th>Point Count</th>
+                                <th style="text-align: center;">Dataset</th>
+                                <th style="text-align: center;">Method</th>
+                                <th style="text-align: center;">Chamfer Dist (↓)</th>
+                                <th style="text-align: center;">AUC (↑) @30</th>
+                                <th style="text-align: center;">AUC (↑) @15</th>
+                                <th style="text-align: center;">AUC (↑) @5</th>
+                                <th style="text-align: center;">AUC (↑) @3</th>
+                                <th style="text-align: center;">Point Count</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Placeholder: Populate with VGGT results -->
-                            <tr>
-                                <td>Scene 1</td>
-                                <td>VGGT (Base)</td>
-                                <td>0.015</td>
-                                <td>0.85</td>
-                                <td>15,420</td>
-                            </tr>
-                            <tr>
-                                <td>Scene 1</td>
-                                <td>VGGT (Compressed)</td>
-                                <td>0.034</td>
-                                <td>0.72</td>
-                                <td>12,100</td>
-                            </tr>
-                        </tbody>
+                            <tbody>
+                                <tr style="border-bottom: 2px solid white;">
+                                    <td style="text-align: center;">Original</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.4717</td>
+                                    <td style="text-align: center;">0.9745</td>
+                                    <td style="text-align: center;">0.9489</td>
+                                    <td style="text-align: center;">0.8545</td>
+                                    <td style="text-align: center;">0.7704</td>
+                                    <td style="text-align: center;">26,614.91</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">AVC 27</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.4721</td>
+                                    <td style="text-align: center;">0.9604</td>
+                                    <td style="text-align: center;">0.9207</td>
+                                    <td style="text-align: center;">0.7800</td>
+                                    <td style="text-align: center;">0.6778</td>
+                                    <td style="text-align: center;">25,234.78</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">AVC 32</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.4923</td>
+                                    <td style="text-align: center;">0.9576</td>
+                                    <td style="text-align: center;">0.9152</td>
+                                    <td style="text-align: center;">0.7611</td>
+                                    <td style="text-align: center;">0.6509</td>
+                                    <td style="text-align: center;">22,855.32</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">AVC 37</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5279</td>
+                                    <td style="text-align: center;">0.9509</td>
+                                    <td style="text-align: center;">0.9019</td>
+                                    <td style="text-align: center;">0.7289</td>
+                                    <td style="text-align: center;">0.6056</td>
+                                    <td style="text-align: center;">20,012.51</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">AVC 42</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5615</td>
+                                    <td style="text-align: center;">0.9405</td>
+                                    <td style="text-align: center;">0.8809</td>
+                                    <td style="text-align: center;">0.6800</td>
+                                    <td style="text-align: center;">0.5528</td>
+                                    <td style="text-align: center;">16,038.15</td>
+                                </tr>
+                                <tr style="border-bottom: 2px solid white;">
+                                    <td style="text-align: center;">AVC 47</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5884</td>
+                                    <td style="text-align: center;">0.9210</td>
+                                    <td style="text-align: center;">0.8443</td>
+                                    <td style="text-align: center;">0.6117</td>
+                                    <td style="text-align: center;">0.4676</td>
+                                    <td style="text-align: center;">15,355.68</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">JPEG 70</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.4801</td>
+                                    <td style="text-align: center;">0.9749</td>
+                                    <td style="text-align: center;">0.9498</td>
+                                    <td style="text-align: center;">0.8567</td>
+                                    <td style="text-align: center;">0.7741</td>
+                                    <td style="text-align: center;">26,173.84</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">JPEG 50</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5059</td>
+                                    <td style="text-align: center;">0.9756</td>
+                                    <td style="text-align: center;">0.9513</td>
+                                    <td style="text-align: center;">0.8589</td>
+                                    <td style="text-align: center;">0.7741</td>
+                                    <td style="text-align: center;">24,491.97</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">JPEG 30</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5075</td>
+                                    <td style="text-align: center;">0.9732</td>
+                                    <td style="text-align: center;">0.9467</td>
+                                    <td style="text-align: center;">0.8461</td>
+                                    <td style="text-align: center;">0.7593</td>
+                                    <td style="text-align: center;">22,597.27</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">JPEG 20</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5226</td>
+                                    <td style="text-align: center;">0.9716</td>
+                                    <td style="text-align: center;">0.9433</td>
+                                    <td style="text-align: center;">0.8361</td>
+                                    <td style="text-align: center;">0.7435</td>
+                                    <td style="text-align: center;">20,148.48</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">JPEG 10</td>
+                                    <td style="text-align: center;">VGGT (Base)</td>
+                                    <td style="text-align: center;">3.5400</td>
+                                    <td style="text-align: center;">0.9679</td>
+                                    <td style="text-align: center;">0.9357</td>
+                                    <td style="text-align: center;">0.8156</td>
+                                    <td style="text-align: center;">0.7120</td>
+                                    <td style="text-align: center;">16,450.08</td>
+                                </tr>
+                            </tbody>
                     </table>
+
+
                 </div>
             </div>
 
