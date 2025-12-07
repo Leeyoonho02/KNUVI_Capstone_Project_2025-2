@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compression Pipeline - KNUVI Capstone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .code-block {
+            background: #1e1e2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #333;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #dcdcdc;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "•";
+            color: var(--text-accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .param-table th,
+        .param-table td {
+            text-align: left;
+            padding: 0.8rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .param-table th {
+            color: var(--text-accent);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">KNUVI <span class="text-accent">Capstone</span></a>
+            <div class="nav-links">
+                <a href="index.html">Introduction</a>
+                <a href="compression.html" class="active">Compression</a>
+                <a href="results.html">Results</a>
+                <a href="team.html">Team</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 100px;">
+        <header class="section-header">
+            <h1>Compression Pipeline</h1>
+            <p class="text-secondary">Image/Video Integrated Compression System used in our research.</p>
+        </header>
+
+        <section class="section">
+            <div class="card">
+                <h2>Overview</h2>
+                <p class="text-secondary" style="margin-top: 1rem; line-height: 1.6;">
+                    This project provides a command-line interface (CLI) pipeline for automating image and video
+                    compression.
+                    It allows users to easily encode various media files using different codecs (HEVC, AVC, JPEG)
+                    and quality settings through a single, unified command structure <code>main.py</code>.
+                </p>
+
+                <h3 style="margin-top: 2rem;">Key Features</h3>
+                <ul class="feature-list text-secondary">
+                    <li><strong>Unified Interface</strong>: A single <code>main.py</code> script handles all codec
+                        operations.</li>
+                    <li><strong>Multiple Codecs</strong>: Supports HEVC (H.265), AVC (H.264), and JPEG.</li>
+                    <li><strong>Flexible Input</strong>: Processes single files or entire directories recursively.</li>
+                    <li><strong>Quality Control</strong>: Easy QP/Quality setting via <code>--QP</code> argument.</li>
+                    <li><strong>Encoding Modes</strong>: Supports Standard (Random Access) and All-Intra modes.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Usage Guide</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>General Command</h3>
+                    <div class="code-block">
+                        python3 main.py \
+                        --codec <CODEC> \
+                            --QP <VALUE> \
+                                --input <PATH> \
+                                    --output <PATH> \
+                                        [OPTIONS]
+                    </div>
+                    <p class="text-secondary text-sm">
+                        Replace &lt;CODEC&gt; with <code>HEVC</code>, <code>AVC</code>, or <code>JPEG</code>. <br>
+                        Replace &lt;VALUE&gt; with the desired quality factor or QP.
+                    </p>
+                </div>
+
+                <div>
+                    <h3>Argument Reference</h3>
+                    <table class="param-table text-secondary text-sm">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code>--codec</code></td>
+                            <td>Codec to use: HEVC, AVC, JPEG</td>
+                        </tr>
+                        <tr>
+                            <td><code>--QP</code></td>
+                            <td>Quality parameter (Lower=Better for Video, Higher=Better for JPEG)</td>
+                        </tr>
+                        <tr>
+                            <td><code>--preset</code></td>
+                            <td>Speed preset (e.g., fast, medium, slow). Default: medium</td>
+                        </tr>
+                        <tr>
+                            <td><code>--all_intra</code></td>
+                            <td>Use All-Intra mode (every frame is a keyframe)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Examples</h2>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <div class="card">
+                    <h4><i data-lucide="video" style="vertical-align: middle; margin-right: 8px;"></i>HEVC Encoding
+                        (Random Access)</h4>
+                    <p class="text-secondary text-sm" style="margin-bottom: 0.5rem;">Standard video compression with GOP
+                        structure.</p>
+                    <div class="code-block">
+                        python3 main.py --codec HEVC --QP 27 --input video.mp4 --output ./out --preset fast
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4><i data-lucide="video" style="vertical-align: middle; margin-right: 8px;"></i>HEVC Encoding
+                        (All-Intra)</h4>
+                    <p class="text-secondary text-sm" style="margin-bottom: 0.5rem;">Every frame encoded as a keyframe.
+                    </p>
+                    <div class="code-block">
+                        python3 main.py --codec HEVC --QP 27 --input video.mp4 --output ./out_ai --all_intra
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4><i data-lucide="video" style="vertical-align: middle; margin-right: 8px;"></i>AVC (H.264)
+                        Encoding</h4>
+                    <div class="code-block">
+                        python3 main.py --codec AVC --QP 30 --input video.mp4 --output ./out_avc --preset ultrafast
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4><i data-lucide="image" style="vertical-align: middle; margin-right: 8px;"></i>JPEG Compression
+                    </h4>
+                    <div class="code-block">
+                        python3 main.py --codec JPEG --QP 90 --input image.png --output ./out_jpeg
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>System Requirements</h2>
+            <div class="card">
+                <ul class="feature-list text-secondary">
+                    <li><strong>Python 3</strong>: For running the main script.</li>
+                    <li><strong>FFmpeg</strong>: Required for AVC and HEVC encoding/decoding. Must be in system PATH.
+                    </li>
+                    <li><strong>Pillow</strong>: Python library for JPEG handling (<code>pip install Pillow</code>).
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 KNUVI Capstone Team 3</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
