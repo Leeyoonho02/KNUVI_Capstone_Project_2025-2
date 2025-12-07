@@ -205,6 +205,12 @@
                         <label for="genAllIntra" style="color: #eee;">All-Intra Mode</label>
                     </div>
 
+                    <!-- YUV Input Checkbox -->
+                    <div id="genYUVInputContainer" style="display: flex; align-items: center; margin-top: 2rem;">
+                        <input type="checkbox" id="genIsYUV" style="width: 20px; height: 20px; margin-right: 10px;">
+                        <label for="genIsYUV" style="color: #eee;">YUV Input (Raw)</label>
+                    </div>
+
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
@@ -226,6 +232,8 @@
                             style="width: 100%; padding: 10px; background: #181824; border: 1px solid #444; border-radius: 6px; color: #fff;">
                     </div>
                 </div>
+
+                <!-- YUV Settings (Width/Height) - Hidden by default -->
                 <div id="genYUVSettings"
                     style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; display: none;">
                     <div>
@@ -263,6 +271,10 @@
             const genPresetContainer = document.getElementById('genPresetContainer');
             const genAllIntra = document.getElementById('genAllIntra');
             const genAllIntraContainer = document.getElementById('genAllIntraContainer');
+
+            const genIsYUV = document.getElementById('genIsYUV');
+            const genYUVInputContainer = document.getElementById('genYUVInputContainer');
+
             const genInput = document.getElementById('genInput');
             const genOutput = document.getElementById('genOutput');
             const genYUVSettings = document.getElementById('genYUVSettings');
@@ -277,9 +289,13 @@
                 if (codec === 'JPEG') {
                     genPresetContainer.style.display = 'none';
                     genAllIntraContainer.style.display = 'none';
+                    genYUVInputContainer.style.display = 'none'; // JPEG theoretically supports YUV but script structure suggests video context
+
                     if (genInput.value === 'video.mp4') genInput.value = 'image.png';
                 } else {
                     genPresetContainer.style.display = 'block';
+                    genYUVInputContainer.style.display = 'flex';
+
                     if (genInput.value === 'image.png') genInput.value = 'video.mp4';
 
                     // Toggle All-Intra (Only for HEVC)
@@ -301,10 +317,10 @@
                 const output = genOutput.value || "./output";
                 const preset = genPreset.value;
                 const isAllIntra = genAllIntra.checked;
+                const isYUV = genIsYUV.checked;
 
-                // Check for YUV
-                const isYUV = input.toLowerCase().endsWith('.yuv');
-                if (isYUV) {
+                // Toggle YUV Settings visibility
+                if (isYUV && codec !== 'JPEG') {
                     genYUVSettings.style.display = 'grid';
                 } else {
                     genYUVSettings.style.display = 'none';
@@ -320,7 +336,7 @@
                     cmd += ` --all_intra`;
                 }
 
-                if (isYUV) {
+                if (isYUV && codec !== 'JPEG') {
                     const w = genWidth.value;
                     const h = genHeight.value;
                     cmd += ` --width ${w} --height ${h}`;
@@ -334,6 +350,7 @@
             genQP.addEventListener('input', updateCommand);
             genPreset.addEventListener('change', updateCommand);
             genAllIntra.addEventListener('change', updateCommand);
+            genIsYUV.addEventListener('change', updateCommand);
             genInput.addEventListener('input', updateCommand);
             genOutput.addEventListener('input', updateCommand);
             genWidth.addEventListener('input', updateCommand);
