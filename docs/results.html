@@ -48,8 +48,8 @@
             <a href="index.html" class="logo">KNUVI <span class="text-accent">Capstone</span></a>
             <div class="nav-links">
                 <a href="index.html">Introduction</a>
-                <a href="compression.html">Compression</a>
                 <a href="results.html" class="active">Results</a>
+                <a href="compression.html">Compression</a>
                 <a href="team.html">Team</a>
             </div>
         </div>
@@ -65,38 +65,229 @@
             <div class="section-header"
                 style="border-bottom: 2px solid var(--text-accent); padding-bottom: 1rem; margin-bottom: 2rem;">
                 <h2 style="color: var(--text-accent);">I. 3D Gaussian Splatting Analysis</h2>
-                <p class="text-secondary">Evaluating reconstruction quality under varying compression levels (CRF/QP).
-                </p>
+                <p class="text-secondary" style="margin-bottom: 0.5rem;">Evaluating reconstruction quality under varying
+                    compression levels (CRF/QP).</p>
+                <p class="text-secondary"><strong>Dataset</strong>: MipNeRF360 (8x downscaled)</p>
             </div>
 
             <div class="card">
-                <h3>Quantitative Results (PSNR / SSIM / LPIPS)</h3>
+                <h3>Quantitative Results: HEVC Compression</h3>
                 <div style="overflow-x: auto; margin-top: 1rem;">
                     <table>
                         <thead>
                             <tr>
-                                <th>Dataset</th>
-                                <th>Compression</th>
-                                <th>PSNR (↑)</th>
-                                <th>SSIM (↑)</th>
-                                <th>LPIPS (↓)</th>
+                                <th>QP</th>
+                                <th>PSNR</th>
+                                <th>SSIM</th>
+                                <th>LPIPS</th>
+                                <th>QP(Ref)</th>
+                                <th>ΔPSNR (↓)</th>
+                                <th>ΔSSIM (↓)</th>
+                                <th>ΔLPIPS (↑)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Placeholder: Populate with 3DGS results -->
                             <tr>
-                                <td>Truck</td>
-                                <td>Original</td>
-                                <td>32.45</td>
-                                <td>0.94</td>
-                                <td>0.08</td>
+                                <td>HEVC 27</td>
+                                <td>30.781</td>
+                                <td>0.871</td>
+                                <td>0.099</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
                             </tr>
                             <tr>
-                                <td>Truck</td>
-                                <td>QP 30</td>
-                                <td>28.12</td>
-                                <td>0.88</td>
-                                <td>0.15</td>
+                                <td>HEVC 32</td>
+                                <td>28.335</td>
+                                <td>0.777</td>
+                                <td>0.211</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>HEVC 37</td>
+                                <td>25.731</td>
+                                <td>0.672</td>
+                                <td>0.345</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>HEVC 42</td>
+                                <td>24.022</td>
+                                <td>0.580</td>
+                                <td>0.455</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #444;">
+                                <td>Rendered HEVC 27</td>
+                                <td>25.527</td>
+                                <td>0.752</td>
+                                <td>0.195</td>
+                                <td>27</td>
+                                <td>5.253</td>
+                                <td>0.119</td>
+                                <td>0.096</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered HEVC 32</td>
+                                <td>23.782</td>
+                                <td>0.652</td>
+                                <td>0.326</td>
+                                <td>32</td>
+                                <td>4.553</td>
+                                <td>0.125</td>
+                                <td>0.115</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered HEVC 37</td>
+                                <td>21.542</td>
+                                <td>0.543</td>
+                                <td>0.435</td>
+                                <td>37</td>
+                                <td>4.189</td>
+                                <td>0.129</td>
+                                <td>0.091</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered HEVC 42</td>
+                                <td>20.420</td>
+                                <td>0.481</td>
+                                <td>0.557</td>
+                                <td>42</td>
+                                <td>3.603</td>
+                                <td>0.098</td>
+                                0.102</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3>Quantitative Results: JPEG Compression</h3>
+                <div style="overflow-x: auto; margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Outputs</th>
+                                <th>PSNR</th>
+                                <th>SSIM</th>
+                                <th>LPIPS</th>
+                                <th>QF</th>
+                                <th>ΔPSNR (↓)</th>
+                                <th>ΔSSIM (↓)</th>
+                                <th>ΔLPIPS (↑)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JPEG 90</td>
+                                <td>35.835</td>
+                                <td>0.960</td>
+                                <td>0.012</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 70</td>
+                                <td>31.287</td>
+                                <td>0.906</td>
+                                <td>0.046</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 50</td>
+                                <td>29.679</td>
+                                <td>0.871</td>
+                                <td>0.084</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 30</td>
+                                <td>28.070</td>
+                                <td>0.825</td>
+                                <td>0.149</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>JPEG 10</td>
+                                <td>24.462</td>
+                                <td>0.673</td>
+                                <td>0.345</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="border-top: 2px solid #444;">
+                                <td>Rendered JPEG 90</td>
+                                <td>27.027</td>
+                                <td>0.846</td>
+                                <td>0.097</td>
+                                <td>90</td>
+                                <td>8.807</td>
+                                <td>0.114</td>
+                                <td>0.086</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 70</td>
+                                <td>26.454</td>
+                                <td>0.821</td>
+                                0.134</td>
+                                <td>70</td>
+                                <td>4.833</td>
+                                <td>0.084</td>
+                                0.088</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 50</td>
+                                <td>25.624</td>
+                                <td>0.787</td>
+                                <td>0.173</td>
+                                <td>50</td>
+                                <td>4.055</td>
+                                <td>0.083</td>
+                                0.089</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 30</td>
+                                <td>25.366</td>
+                                <td>0.767</td>
+                                0.218</td>
+                                <td>30</td>
+                                <td>2.704</td>
+                                <td>0.058</td>
+                                0.069</td>
+                            </tr>
+                            <tr>
+                                <td>Rendered JPEG 10</td>
+                                <td>22.611</td>
+                                <td>0.617</td>
+                                0.367</td>
+                                <td>10</td>
+                                <td>1.852</td>
+                                <td>0.057</td>
+                                0.022</td>
                             </tr>
                         </tbody>
                     </table>
@@ -129,7 +320,9 @@
             <div class="section-header"
                 style="border-bottom: 2px solid var(--accent-secondary); padding-bottom: 1rem; margin-bottom: 2rem;">
                 <h2 style="color: var(--accent-secondary);">II. VGGT Analysis</h2>
-                <p class="text-secondary">Geometric Estimation robustness analysis using Chamfer Distance and AUC.</p>
+                <p class="text-secondary" style="margin-bottom: 0.5rem;">Geometric Estimation robustness analysis using
+                    Chamfer Distance and AUC.</p>
+                <p class="text-secondary"><strong>Dataset</strong>: CO3Dv2</p>
             </div>
 
             <div class="card">
