@@ -19,7 +19,6 @@
                 <a href="index.html">Home</a>
                 <a href="methodology.html" class="active">Methodology</a>
                 <a href="results.html">Results</a>
-                <a href="viewer.html">3D Viewer</a>
                 <a href="team.html">Team</a>
             </div>
         </div>
@@ -49,36 +48,49 @@
                         <div>
                             <i data-lucide="file-archive" class="text-accent" size="32"></i>
                             <h4 style="margin-top: 1rem;">Compression</h4>
-                            <p class="text-secondary text-sm">H.264 / H.265<br>(CRF/QP)</p>
+                            <p class="text-secondary text-sm">JPEG<br>AVC / HEVC</p>
                         </div>
+
 
                         <i data-lucide="arrow-right" class="text-secondary"></i>
 
-                        <div>
-                            <i data-lucide="camera" class="text-accent" size="32"></i>
-                            <h4 style="margin-top: 1rem;">SfM (COLMAP)</h4>
-                            <p class="text-secondary text-sm">Sparse Reconstruction</p>
+
+                        <!-- Right Column: Two Long Rectangles -->
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                            <!-- Top Rectangle: SfM -> 3DGS -->
+                            <div
+                                style="border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; gap: 2rem; background: rgba(255,255,255,0.03); min-width: 400px; justify-content: center;">
+                                <div style="text-align: center;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 0.95rem;">
+                                        SfM (COLMAP)</h4>
+                                    <p class="text-secondary text-sm" style="font-size: 0.8rem;">Sparse Recon</p>
+                                </div>
+
+                                <i data-lucide="arrow-right" class="text-secondary"></i>
+
+                                <div style="text-align: center;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.95rem;">
+                                        3DGS</h4>
+                                    <p class="text-secondary text-sm" style="font-size: 0.8rem;">Gaussian Splatting</p>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Rectangle: VGGT -->
+                            <div
+                                style="border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); min-width: 400px;">
+                                <div style="text-align: center;">
+                                    <h4 style="margin-bottom: 0.5rem; color: var(--text-accent); font-size: 0.95rem;">
+                                        VGGT</h4>
+                                    <p class="text-secondary text-sm" style="font-size: 0.8rem;">Visual Geometry
+                                        Grounded Transformer</p>
+                                </div>
+                            </div>
+
                         </div>
+
                     </div>
-
-                    <i data-lucide="arrow-right" class="text-secondary"></i>
-
-                    <!-- Braching -->
-                    <div style="display: flex; flex-direction: column; gap: 2rem;">
-                        <div style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
-                            <i data-lucide="box" class="text-accent" size="24"></i>
-                            <h4>3DGS</h4>
-                            <p class="text-secondary text-sm">Gaussian Splatting</p>
-                        </div>
-                        <div style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
-                            <i data-lucide="layers" class="text-accent" size="24"></i>
-                            <h4>VGGT</h4>
-                            <p class="text-secondary text-sm">Transformer</p>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
         </section>
 
         <section class="section">
