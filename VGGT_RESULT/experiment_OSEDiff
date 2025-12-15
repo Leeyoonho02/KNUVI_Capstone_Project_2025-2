@@ -1,0 +1,90 @@
+import os
+import subprocess
+
+# ======================
+# 🔧 실험 제어
+# ======================
+QP_LIST = [10, 20, 30, 50, 70]
+
+CATEGORY_LIST = [
+    "backpack",
+    "ball",
+    "book",
+    "chair",
+    "handbag",
+    "laptop",
+    "plant",
+    "teddybear",
+    "vase"
+]
+
+DATASET_ROOT = "/home/knuvi/datasetJPEG/jpeg"
+RESULT_ROOT = "/home/knuvi/OSEDiff/Results/jpeg"
+SCRIPT_PATH = "/home/knuvi/OSEDiff/test_osediff.py"
+
+# ======================
+# 🔧 모델 & 옵션 (최종 확정값)
+# ======================
+PRETRAINED_MODEL = "/home/knuvi/model_zoo/stable-diffusion-2-1-base"
+OSEDIFF_PATH = "/home/knuvi/OSEDiff/preset/models/osediff.pkl"
+RAM_PATH = "/home/knuvi/OSEDiff/ram_swin_large_14m.pth"
+RAM_FT_PATH = "/home/knuvi/OSEDiff/DAPE.pth"
+
+PROCESS_SIZE = "32"
+UPSCALE = "1"
+ALIGN_METHOD = "adain"
+MIXED_PRECISION = "fp16"
+
+VAE_DECODER_TILE = "56"
+VAE_ENCODER_TILE = "256"
+LATENT_TILE = "32"
+LATENT_OVERLAP = "8"
+
+# ======================
+# 🚀 실행 루프
+# ======================
+for qp in QP_LIST:
+    qp_dir = f"JpegOutput_{qp}"
+    qp_path = os.path.join(DATASET_ROOT, qp_dir)
+    if not os.path.isdir(qp_path):
+        continue
+
+    for category in CATEGORY_LIST:
+        category_path = os.path.join(qp_path, category)
+        if not os.path.isdir(category_path):
+            continue
+
+        for scene in sorted(os.listdir(category_path)):
+            images_dir = os.path.join(category_path, scene, "images")
+            if not os.path.isdir(images_dir):
+                continue
+
+            output_images_dir = os.path.join(
+                RESULT_ROOT,
+                qp_dir,
+                category,
+                scene,
+                "images"
+            )
+            os.makedirs(output_images_dir, exist_ok=True)
+
+            cmd = [
+                "python", SCRIPT_PATH,
+                "-i", images_dir,
+                "-o", output_images_dir,
+                "--pretrained_model_name_or_path", PRETRAINED_MODEL,
+                "--osediff_path", OSEDIFF_PATH,
+                "--ram_path", RAM_PATH,
+                "--ram_ft_path", RAM_FT_PATH,
+                "--process_size", PROCESS_SIZE,
+                "--upscale", UPSCALE,
+                "--align_method", ALIGN_METHOD,
+                "--mixed_precision", MIXED_PRECISION,
+                "--vae_decoder_tiled_size", VAE_DECODER_TILE,
+                "--vae_encoder_tiled_size", VAE_ENCODER_TILE,
+                "--latent_tiled_size", LATENT_TILE,
+                "--latent_tiled_overlap", LATENT_OVERLAP,
+            ]
+
+            print("▶ RUN:", " ".join(cmd))
+            subprocess.run(cmd, check=True)
