@@ -3,22 +3,39 @@ import re
 import subprocess
 import pathlib
 
-base_dir = "/Users/jehee/Documents/KNU/intern/Blind_images_v2"
-output_base = "/Users/jehee/Documents/KNU/intern/Blind_images_v2/avc"
-category_list = ["backpack", "ball", "book", "bottle", "chair", "cup", "handbag", "labtop", "plant", "teddybear", "vase"]   # 필요한 카테고리
+# =========================
+# 경로 설정
+# =========================
+base_dir = "/dataset"
+output_base = "/datasetAVC/avc"
 
-qp_list = [27, 32, 37]
+category_list = [
+    "backpack", "ball", "book", "bottle", "chair",
+    "cup", "handbag", "laptop", "plant", "teddybear", "vase"
+]
 
-# 숫자_숫자_숫자 폴더 정규식
+qp_list = [27, 32, 37, 42, 47]
+
 pattern = re.compile(r"^\d+_\d+_\d+$")
 
+# =========================
+# 유틸 함수
+# =========================
+def extract_last_number(filename):
+    nums = re.findall(r"\d+", filename)
+    return int(nums[-1]) if nums else 0
+
+
+# =========================
+# 메인 루프
+# =========================
 for qp in qp_list:
     for category in category_list:
         category_path = os.path.join(base_dir, category)
         if not os.path.isdir(category_path):
             continue
 
-        for subfolder in os.listdir(category_path):
+        for subfolder in sorted(os.listdir(category_path)):
             if not pattern.match(subfolder):
                 continue
 
@@ -26,50 +43,96 @@ for qp in qp_list:
             if not os.path.isdir(image_dir):
                 continue
 
-            # 입력 프레임 리스트
-            files = sorted([f for f in os.listdir(image_dir) if f.lower().endswith(".jpg")])
+            # ✅ 메타데이터 제외 + 숫자 기준 정렬
+            files = sorted(
+                [
+                    f for f in os.listdir(image_dir)
+                    if f.lower().endswith(".jpg") and not f.startswith(".")
+                ],
+                key=extract_last_number
+            )
+
             if not files:
                 continue
 
-            # 임시 영상 파일
-            temp_video = os.path.join(output_base, category, f"{subfolder}_qp{qp}.mp4")
-            os.makedirs(os.path.dirname(temp_video), exist_ok=True)
+            # =========================
+            # 출력 디렉토리
+            # =========================
+            output_dir = os.path.join(
+                output_base,
+                f"AvcOutput_{qp}",
+                category,
+                subfolder,
+                "images"
+            )
+            os.makedirs(output_dir, exist_ok=True)
 
-            # 출력 프레임 폴더
-            output_frames_dir = os.path.join(output_base, category, subfolder, f"images_qp{qp}")
-            os.makedirs(output_frames_dir, exist_ok=True)
+            temp_video = os.path.join(output_dir, f"temp_qp{qp}.mp4")
+            list_file = os.path.join(output_dir, "input_list.txt")
 
-            # 1. 영상 만들기 (QP 고정, B=2)
+            # =========================
+            # ffmpeg 입력 리스트 생성
+            # =========================
+            with open(list_file, "w") as f:
+                for fname in files:
+                    f.write(f"file '{os.path.join(image_dir, fname)}'\n")
+
+            # =========================
+            # 1️⃣ JPG → AVC 영상
+            # =========================
             cmd_compress = [
                 "ffmpeg", "-y",
-                "-framerate", "30",
-                "-i", os.path.join(image_dir, "frame%06d.jpg"),
-                "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
+                "-f", "concat",
+                "-safe", "0",
+                "-r", "30",
+                "-i", list_file,
+                "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2",
                 "-c:v", "libx264",
                 "-profile:v", "high",
                 "-preset", "slow",
                 "-qp", str(qp),
-                "-x264-params", "bframes=2:keyint=48:scenecut=0",
                 "-pix_fmt", "yuv420p",
+                "-r", "30",
                 temp_video
             ]
             subprocess.run(cmd_compress, check=True)
 
-            # 2. 영상 → PNG 프레임 추출
-            # 이름은 {원래파일명}_AVCRA_{QP}.png
+            # =========================
+            # 2️⃣ 영상 → PNG 프레임 추출
+            # =========================
             cmd_extract = [
                 "ffmpeg", "-y",
                 "-i", temp_video,
-                os.path.join(output_frames_dir, f"frame_%06d.png")
+                "-r", "30",
+                os.path.join(output_dir, "tmp_%06d.png")
             ]
             subprocess.run(cmd_extract, check=True)
 
-            # 파일명 변환 (frame_000001.png → {원래파일명}_AVCRA_{qp}.png)
-            for idx, file in enumerate(files, start=1):
-                orig_stem = pathlib.Path(file).stem
-                src = os.path.join(output_frames_dir, f"frame_{idx:06d}.png")
-                dst = os.path.join(output_frames_dir, f"{orig_stem}_AVCRA_{qp}.png")
-                if os.path.exists(src):
-                    os.rename(src, dst)
+            # =========================
+            # 3️⃣ rename (실제 생성된 tmp 기준)
+            # =========================
+            tmp_files = sorted(
+                f for f in os.listdir(output_dir)
+                if f.startswith("tmp_") and f.lower().endswith(".png")
+            )
 
-            print(f"✅ {category}/{subfolder} QP={qp} 완료 → {output_frames_dir}")
+            if len(tmp_files) != len(files):
+                print(
+                    f"⚠️ 프레임 수 불일치 | "
+                    f"{category}/{subfolder} | "
+                    f"JPG={len(files)} PNG={len(tmp_files)}"
+                )
+
+            for orig_file, tmp_name in zip(files, tmp_files):
+                orig_stem = pathlib.Path(orig_file).stem
+                src = os.path.join(output_dir, tmp_name)
+                dst = os.path.join(output_dir, f"{orig_stem}_AVC_{qp}.png")
+                os.rename(src, dst)
+
+            # =========================
+            # 정리
+            # =========================
+            os.remove(temp_video)
+            os.remove(list_file)
+
+            print(f"✅ 완료: AvcOutput_{qp}/{category}/{subfolder}")
