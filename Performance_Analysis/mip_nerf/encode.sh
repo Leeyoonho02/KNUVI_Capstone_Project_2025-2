@@ -6,13 +6,13 @@ mkdir -p /mnt/c/Users/PC012/Desktop/dataset/coding_log
 # 설정
 qps=(27 32 37 42)
 inputs=(
-"stump 126 622 412"
+"stump 126 622 413"
 "bonsai 292 390 260"
-"kitchen 279 388 260"
-"counter 240 388 260"
-"room 311 388 258"
+"kitchen 279 389 260"
+"counter 240 389 260"
+"room 311 389 259"
 "garden 185 648 420"
-"bicycle 195 618 410"
+"bicycle 195 618 411"
 "flowers 173 628 414"
 "treehill 141 634 416"
 )
