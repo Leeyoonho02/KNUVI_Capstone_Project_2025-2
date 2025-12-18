@@ -1,12 +1,12 @@
 videos=(
-"1_bicycle bicycle 618 410"
+"1_bicycle bicycle 618 411"
 "2_bonsai bonsai 390 260"
-"3_counter counter 388 260"
+"3_counter counter 389 260"
 "4_flowers flowers 628 414"
 "5_garden garden 648 420"
-"6_kitchen kitchen 388 260"
-"7_room room 388 258"
-"8_stump stump 622 412"
+"6_kitchen kitchen 389 260"
+"7_room room 389 259"
+"8_stump stump 622 413"
 "9_treehill treehill 634 416"
 )
 
